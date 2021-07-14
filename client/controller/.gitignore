@@ -30,5 +30,6 @@ lib/
 # controller configuration files
 config/*
 !config/sample_*_config.json
+!config/*_config.json
 *.pid
 
