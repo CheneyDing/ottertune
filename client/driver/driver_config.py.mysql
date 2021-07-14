@@ -6,19 +6,17 @@ import os
 
 # Location of the database host relative to this driver
 # Valid values: local, remote, docker or remote_docker
-HOST_CONN = 'remote'
+HOST_CONN = 'local'
 
 # The name of the Docker container for the target database
 # (only required if HOST_CONN = docker)
 CONTAINER_NAME = None  # e.g., 'postgres_container'
 
 # Host SSH login credentials (only required if HOST_CONN=remote)
-LOGIN_NAME = 'root'
-LOGIN_HOST = 'mysql'
+LOGIN_NAME = None
+LOGIN_HOST = None
 LOGIN_PASSWORD = None
 LOGIN_PORT = None  # Set when using a port other than the SSH default
-# xyq add
-LOGIN_KEY = '/root/.ssh/kp-x5oszr3r'    # Set when using ssh-key-file other than ssh-password
 
 
 #==========================================================
@@ -44,10 +42,10 @@ DB_PASSWORD = ''
 ADMIN_USER = DB_USER
 
 # Database host address
-DB_HOST = 'mysql'
+DB_HOST = 'tidb-pd-1'
 
 # Database port
-DB_PORT = '3306'
+DB_PORT = '4000'
 
 # If set to True, DB_CONF file is mounted to database container file
 # Only available when HOST_CONN is docker or remote_docker
@@ -55,7 +53,7 @@ DB_CONF_MOUNT = False
 
 # Path to the configuration file on the database server
 # If DB_CONF_MOUNT is True, the path is on the host server, not docker
-DB_CONF = '/etc/mysql/my.cnf'
+DB_CONF = '/etc/my.cnf'
 
 # Path to the directory for storing database dump files
 DB_DUMP_DIR = None
@@ -145,7 +143,7 @@ RESTART_SLEEP_SEC = 30
 OLTPBENCH_HOME = '/data1/workspace/oltpbench/'
 
 # Path to the OLTPBench configuration file
-OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, f'config/tpcc_config_{DB_TYPE}.xml')
+OLTPBENCH_CONFIG = os.path.join(OLTPBENCH_HOME, 'config/tpcc_config_mysql.xml')
 
 # Name of the benchmark to run
 OLTPBENCH_BENCH = 'tpcc'
@@ -163,7 +161,7 @@ CONTROLLER_OBSERVE_SEC = 100
 CONTROLLER_HOME = DRIVER_HOME + '/../controller'
 
 # Path to the controller configuration file
-CONTROLLER_CONFIG = os.path.join(CONTROLLER_HOME, f'config/{DB_TYPE}_config.json')
+CONTROLLER_CONFIG = os.path.join(CONTROLLER_HOME, 'config/{}_config.json'.format(DB_TYPE))
 
 
 #==========================================================

@@ -36,7 +36,12 @@ fabric_output.update({
 })
 env.abort_exception = FabricException
 env.hosts = [dconf.LOGIN]
-env.password = dconf.LOGIN_PASSWORD
+# xyq add
+# if password is empty, use ssh-key instead
+if dconf.LOGIN_KEY:
+    env.key_filename = dconf.LOGIN_KEY
+else:
+    env.password = dconf.LOGIN_PASSWORD
 
 # Create local directories
 for _d in (dconf.RESULT_DIR, dconf.LOG_DIR, dconf.TEMP_DIR):
