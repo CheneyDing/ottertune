@@ -1644,6 +1644,7 @@ def alt_create_or_edit_session(request):
         else:
             required_data = ('username', 'password', 'project_name', 'name')
 
+    # note: 根据request请求，从web-server中取得数据
     res = _alt_checker(request, response, required_data=required_data,
                        authenticate_user=authenticate_user)
     if isinstance(res, HttpResponse):
@@ -1667,7 +1668,7 @@ def alt_create_or_edit_session(request):
     session_name = data.pop('name', None)
     if 'algorithm' in data:
         data['algorithm'] = AlgorithmType.type(data['algorithm'])
-    session_knobs = data.pop('session_knobs', None)
+    session_knobs = data.pop('session_knobs', None)  # note: 注意这里如果没有key，返回None
     disable_others = data.pop('disable_others', False)
     hyperparams = data.pop('hyperparameters', None)
     description = data.pop('description', None)
@@ -1726,7 +1727,7 @@ def alt_create_or_edit_session(request):
 
     if created or updated:
         if session_knobs:
-            session_knobs = JSONUtil.loads(session_knobs)
+            session_knobs = JSONUtil.loads(session_knobs)   # note: 将json字符串转换为字典
             SessionKnob.objects.set_knob_min_max_tunability(
                 session, session_knobs, disable_others=disable_others)
         if description is not None:
