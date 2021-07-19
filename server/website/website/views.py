@@ -630,7 +630,10 @@ def handle_result_files(session, files, execution_times=None):
 
     else:
         dbms_type = DBMSType.type(summary['database_type'])
-        dbms_version = summary['database_version']
+        if summary['database_type'] == 'tidb':
+            dbms_version = '5.0'
+        else:
+            dbms_version = summary['database_version']
         workload_name = summary['workload_name']
         observation_time = summary['observation_time']
         start_time = datetime.fromtimestamp(
